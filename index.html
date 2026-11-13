@@ -47,5 +47,8 @@
 </main>
 <footer>EKORUSTIKA DIGITALNI ALATI</footer>
 <script src="app.js"></script>
-<script type="module" src="holo3d.js"></script>
+<script>window.__e3d=[];addEventListener('error',function(e){window.__e3d.push((e.message||'')+' '+(e.filename||'').split('/').pop());},true);
+setTimeout(function(){var s=document.querySelector('.stage');if(s&&!s.classList.contains('has3d')){var p=document.createElement('div');p.style.cssText='position:fixed;left:8px;right:8px;bottom:8px;z-index:99;background:#300;color:#fdd;font:12px monospace;padding:8px;border-radius:8px';p.textContent='3D hologram nije učitan (v2.0b): '+(window.__e3d.join(' | ')||'nema poruke o grešci');document.body.appendChild(p);}},6000);</script>
+<script type="module" src="holo3d.js?v=2b"></script>
+<div style="position:fixed;top:4px;right:6px;font:10px sans-serif;color:#46E5FF;opacity:.6;z-index:99">v2.0b</div>
 </body></html>
