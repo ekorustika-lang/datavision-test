@@ -11,23 +11,12 @@
 .stage.has3d{position:relative}
 .hfield{--amp:0;position:relative;width:min(88vw,340px);aspect-ratio:1;margin:0 auto;contain:layout paint}
 .hfield>*{position:absolute;pointer-events:none}
-.hcv{left:12%;top:12%;width:76%;height:76%;mix-blend-mode:screen;-webkit-mask-image:radial-gradient(ellipse 50% 54% at 50% 48%,#000 55%,rgba(0,0,0,.6) 72%,transparent 100%);mask-image:radial-gradient(ellipse 50% 54% at 50% 48%,#000 55%,rgba(0,0,0,.6) 72%,transparent 100%);filter:drop-shadow(0 0 10px rgba(70,229,255,.35))}
-.hbreath{inset:6%;border-radius:50%;border:1.5px solid rgba(70,229,255,.55);background:radial-gradient(circle,rgba(8,125,250,.20) 30%,rgba(70,229,255,.06) 60%,transparent 72%);box-shadow:0 0 calc(18px + 30px*var(--amp)) rgba(70,229,255,calc(.35 + .4*var(--amp))),inset 0 0 30px rgba(8,125,250,.35);animation:hbr 4s ease-in-out infinite;will-change:transform,opacity}
-@keyframes hbr{0%,100%{transform:scale(.97);opacity:.7;border-color:rgba(8,125,250,.6)}50%{transform:scale(1.03);opacity:1;border-color:rgba(70,229,255,.85)}}
-.hring{inset:2%;width:96%;height:96%;fill:none;will-change:transform}
-.hring ellipse{stroke-width:.35;vector-effect:non-scaling-stroke}
-.r1 ellipse{stroke:rgba(70,229,255,.55);stroke-dasharray:40 12 4 12}
-.r2 ellipse{stroke:rgba(57,255,20,.35);stroke-dasharray:6 18}
-.r1{animation:hr1 26s linear infinite}.r2{animation:hr2 38s linear infinite}
-@keyframes hr1{from{transform:perspective(600px) rotateX(68deg) rotateZ(0)}to{transform:perspective(600px) rotateX(68deg) rotateZ(360deg)}}
-@keyframes hr2{from{transform:perspective(600px) rotateY(66deg) rotateZ(360deg)}to{transform:perspective(600px) rotateY(66deg) rotateZ(0)}}
-.hwave{inset:10%;border-radius:50%;border:1px solid rgba(70,229,255,.4);animation:hwv 6s ease-out infinite;opacity:0}
-.hwave.w2{animation-delay:3s}
-@keyframes hwv{0%{transform:scale(.85);opacity:0}20%{opacity:.5}100%{transform:scale(1.12);opacity:0}}
-.hp{left:50%;top:50%;width:3px;height:3px;margin:-1.5px;border-radius:50%;background:#46E5FF;box-shadow:0 0 6px #46E5FF;animation:hpa var(--d) linear infinite;animation-delay:var(--dl);opacity:0}
-.hp:nth-of-type(3n){background:#39FF14;box-shadow:0 0 6px #39FF14}
-@keyframes hpa{0%{transform:rotate(var(--a)) translateY(-34%) translateY(-90px);opacity:0}25%{opacity:.8}100%{transform:rotate(calc(var(--a) + 50deg)) translateY(-160px);opacity:0}}
-#app.speaking .hbreath{animation-duration:2s}
+.hcv{left:12%;top:12%;width:76%;height:76%;mix-blend-mode:screen;-webkit-mask-image:radial-gradient(ellipse 46% 52% at 50% 46%,#000 38%,rgba(0,0,0,.55) 62%,rgba(0,0,0,.15) 82%,transparent 100%);mask-image:radial-gradient(ellipse 46% 52% at 50% 46%,#000 38%,rgba(0,0,0,.55) 62%,rgba(0,0,0,.15) 82%,transparent 100%);animation:hbr 4s ease-in-out infinite;will-change:filter,opacity}
+@keyframes hbr{0%,100%{opacity:.9;filter:drop-shadow(0 0 6px rgba(8,125,250,.35)) brightness(.96)}50%{opacity:1;filter:drop-shadow(0 0 14px rgba(70,229,255,.5)) brightness(1.06)}}
+#app.speaking .hcv{animation-duration:2s}
+.hp{width:2px;height:2px;border-radius:50%;background:#46E5FF;box-shadow:0 0 5px #46E5FF;left:var(--x);top:var(--y);animation:hsp var(--d) ease-in-out infinite;animation-delay:var(--dl);opacity:0}
+.hp:nth-of-type(4n){background:#8FF5FF}
+@keyframes hsp{0%,100%{opacity:0;transform:translateY(0)}45%{opacity:calc(.55 + .35*var(--amp))}100%{transform:translateY(-14px)}}
 @media (prefers-reduced-motion:reduce){.hfield *{animation:none!important}}
 </style>
 </head><body>
@@ -72,7 +61,7 @@
 <script src="../app.js"></script>
 <script>window.__e3d=[];addEventListener('error',function(e){window.__e3d.push((e.message||'')+' '+(e.filename||'').split('/').pop());},true);
 setTimeout(function(){var s=document.querySelector('.stage');if(s&&!s.classList.contains('has3d')){var p=document.createElement('div');p.style.cssText='position:fixed;left:8px;right:8px;bottom:8px;z-index:99;background:#300;color:#fdd;font:12px monospace;padding:8px;border-radius:8px';p.textContent='3D hologram nije učitan (PROBA): '+(window.__e3d.join(' | ')||'nema poruke o grešci');document.body.appendChild(p);}},6000);</script>
-<script src="holo-img.js?v=p2"></script>
-<div style="position:fixed;top:4px;right:6px;font:10px sans-serif;color:#46E5FF;opacity:.6;z-index:99">PROBA p2</div>
+<script src="holo-img.js?v=p3"></script>
+<div style="position:fixed;top:4px;right:6px;font:10px sans-serif;color:#46E5FF;opacity:.6;z-index:99">PROBA p3</div>
 </body></html>
 
