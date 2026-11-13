@@ -1,7 +1,8 @@
-// DataVision PROBA - ozivljena hologramska glava iz slike (WebGL)
+// DataVision PROBA p2 - ozivljena hologramska glava iz slike (WebGL)
 (function(){const FS="precision mediump float;varying vec2 v;uniform sampler2D T;uniform float t,blink,mo,smile,brow,lookX,lookY,glow,rot,nod;uniform vec2 sh;\nfloat el(vec2 q,vec2 c,vec2 r){vec2 d=(q-c)/r;return clamp(1.-dot(d,d),0.,1.);}\nvoid main(){vec2 q=v;vec2 pv=vec2(.51,.8);vec2 d=q-pv;float s=sin(rot),c=cos(rot);q=pv+vec2(c*d.x+s*d.y,-s*d.x+c*d.y);\nq.x+=sh.x;q.y+=sh.y+nod*smoothstep(.85,.25,q.y)*.012;\nfloat bw=el(q,vec2(.403,.322),vec2(.1,.045))+el(q,vec2(.613,.318),vec2(.1,.045));q.y+=brow*.012*bw;\nfloat ew=max(el(q,vec2(.403,.359),vec2(.06,.028)),el(q,vec2(.613,.355),vec2(.06,.028)));q.y-=blink*.026*ew;\nfloat pw=max(el(q,vec2(.403,.359),vec2(.035,.02)),el(q,vec2(.613,.355),vec2(.035,.02)));q-=vec2(lookX*.007,lookY*.004)*pw*(1.-blink);\nfloat jaw=smoothstep(.59,.598,q.y)*el(q,vec2(.51,.64),vec2(.17,.11));q.y-=mo*.022*jaw;\nfloat cL=el(q,vec2(.445,.592),vec2(.035,.025)),cR=el(q,vec2(.575,.592),vec2(.035,.025));q.y+=smile*.008*(cL+cR);q.x+=smile*.004*(cR-cL);\nvec3 col=texture2D(T,q).rgb;\nfloat gap=el(v,vec2(.51,.595+mo*.009),vec2(.055,.004+mo*.011))*mo;col=mix(col,vec3(.01,.03,.08),clamp(gap*1.6,0.,.9))+vec3(0.,.35,.7)*gap*.25;\nfloat g2=el(v,vec2(.403,.359),vec2(.03,.016))+el(v,vec2(.613,.355),vec2(.03,.016));col+=vec3(.2,.6,1.)*g2*(glow*.55+.12*sin(t*2.)+.1)*(1.-blink);\ncol+=vec3(.15,.9,1.)*smoothstep(.006,0.,abs(fract(v.y*.5-t*.12)-.5))*.18;col*=.92+.08*sin(v.y*420.+t*6.);\ncol+=vec3(.1,1.,.3)*.06*smoothstep(.995,1.,sin(v.x*90.+v.y*40.-t*2.));col=mix(col,col*vec3(.75,.95,1.25),.35);\ngl_FragColor=vec4(col,1);}\n";const stage=document.querySelector('.stage'),app=document.getElementById('app');
-const cv=document.createElement('canvas');cv.style.cssText='width:100%;max-width:340px;aspect-ratio:1;display:block;margin:0 auto;-webkit-mask-image:radial-gradient(circle,#000 58%,transparent 71%);mask-image:radial-gradient(circle,#000 58%,transparent 71%)';
-const svg=stage.querySelector('svg');if(svg)svg.style.display='none';stage.prepend(cv);stage.classList.add('has3d');
+const fld=document.createElement('div');fld.className='hfield';fld.innerHTML='<div class="hwave"></div><div class="hwave w2"></div><div class="hbreath"></div><svg class="hring r1" viewBox="0 0 100 100"><ellipse cx="50" cy="50" rx="47" ry="47"/></svg><svg class="hring r2" viewBox="0 0 100 100"><ellipse cx="50" cy="50" rx="44" ry="44"/></svg>'+Array.from({length:9},(_,i)=>'<i class="hp" style="--a:'+(i*40)+'deg;--d:'+(7+i%4*2.3)+'s;--dl:-'+(i*1.7)+'s"></i>').join('');
+const cv=document.createElement('canvas');cv.className='hcv';fld.appendChild(cv);
+const svg=stage.querySelector('svg');if(svg)svg.style.display='none';stage.prepend(fld);stage.classList.add('has3d');
 const gl=cv.getContext('webgl');if(!gl)throw new Error('WebGL nije dostupan');
 const VS='attribute vec2 p;varying vec2 v;void main(){v=p*.5+.5;v.y=1.-v.y;gl_Position=vec4(p,0,1);}';
 function sh(tp,src){const s=gl.createShader(tp);gl.shaderSource(s,src);gl.compileShader(s);if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))throw new Error(gl.getShaderInfoLog(s));return s;}
@@ -11,7 +12,7 @@ const L=gl.getAttribLocation(pr,'p');gl.enableVertexAttribArray(L);gl.vertexAttr
 const U={};'t blink mo smile brow lookX lookY glow rot nod sh'.split(' ').forEach(n=>U[n]=gl.getUniformLocation(pr,n));
 let ready=false;const img=new Image();img.onload=()=>{gl.bindTexture(gl.TEXTURE_2D,gl.createTexture());gl.texImage2D(gl.TEXTURE_2D,0,gl.RGB,gl.RGB,gl.UNSIGNED_BYTE,img);
 [gl.TEXTURE_WRAP_S,gl.TEXTURE_WRAP_T].forEach(k=>gl.texParameteri(gl.TEXTURE_2D,k,gl.CLAMP_TO_EDGE));gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);ready=true;};img.src='data-head.jpg?v=p1';
-function rs(){const r=Math.min(2,devicePixelRatio||1);cv.width=cv.height=Math.round((cv.clientWidth||300)*r);gl.viewport(0,0,cv.width,cv.height);}rs();addEventListener('resize',rs);
+function rs(){const r=Math.min(2,devicePixelRatio||1);cv.width=cv.height=Math.round((cv.clientWidth||260)*r);gl.viewport(0,0,cv.width,cv.height);}rs();addEventListener('resize',rs);
 let now=0,emo='',emoUntil=0,lastKick=-9,kick=0,nodT=-9,surpT=-9,prev='idle',nextBlink=2,blinkT=-9,dbl=false,lookT=0,lookNext=1,vis=true;const t0=performance.now();
 window.dvSpeechKick=()=>{kick=1;lastKick=now;};window.dvEmotion=(e,d=2.5)=>{emo=e;emoUntil=now+d;if(e==='greet'||e==='understand')nodT=now;};
 document.addEventListener('visibilitychange',()=>{vis=!document.hidden;});
@@ -29,5 +30,5 @@ let br=s==='listening'?.8:s==='thinking'?-.6:em==='greet'?.7:0;const sp=now-surp
 S.mo=lp(S.mo,mo,.35);S.sm=lp(S.sm,sm,.05);S.br=lp(S.br,br,.12);S.lx=lp(S.lx,lx,.06);S.ly=lp(S.ly,ly,.06);S.gw=lp(S.gw,s==='speaking'?1:0,.08);
 const calm=(s==='listening'||em==='greet')?.35:1,nd=now-nodT<1.2?Math.sin((now-nodT)/1.2*Math.PI*2):0;
 gl.uniform1f(U.t,now);gl.uniform1f(U.blink,blink);gl.uniform1f(U.mo,S.mo);gl.uniform1f(U.smile,S.sm);gl.uniform1f(U.brow,S.br);
-gl.uniform1f(U.lookX,S.lx);gl.uniform1f(U.lookY,S.ly);gl.uniform1f(U.glow,S.gw);gl.uniform1f(U.rot,.025*Math.sin(now*.5)*calm+(s==='thinking'?.02:0));
-gl.uniform1f(U.nod,nd);gl.uniform2f(U.sh,.008*Math.sin(now*.37)*calm,.006*Math.sin(now*.9));gl.drawArrays(gl.TRIANGLE_STRIP,0,4);}f();})();
+gl.uniform1f(U.lookX,S.lx);gl.uniform1f(U.lookY,S.ly);gl.uniform1f(U.glow,S.gw);gl.uniform1f(U.rot,.012*Math.sin(now*.45)*calm+(s==='thinking'?.02:0));
+gl.uniform1f(U.nod,nd);gl.uniform2f(U.sh,.004*Math.sin(now*.33)*calm,.003*Math.sin(now*.7));gl.drawArrays(gl.TRIANGLE_STRIP,0,4);const amp=(s==='speaking'?S.mo:0).toFixed(2);if(amp!==fld._a){fld._a=amp;fld.style.setProperty('--amp',amp);}}f();})();
