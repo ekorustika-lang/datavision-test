@@ -20,16 +20,17 @@ function speak(text){return new Promise(res=>{
  if(!('speechSynthesis' in window)){res();return;}
  speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='hr-HR';u.rate=.95;u.pitch=.85;if(voice)u.voice=voice;
  const m=$('#mouth');u.onstart=()=>{setState('speaking');mouthT=setInterval(()=>m.style.transform=`scaleY(${1+Math.random()*4})`,90);};
- const end=()=>{clearInterval(mouthT);m.style.transform='';setState('idle');res();};u.onboundary=()=>{window.dvSpeechKick&&window.dvSpeechKick();};u.onend=end;u.onerror=end;speechSynthesis.speak(u);});}
+ const end=()=>{clearInterval(mouthT);m.style.transform='';setState('idle');res();};u.onboundary=ev=>{window.dvSpeechKick&&window.dvSpeechKick(ev&&ev.charIndex!=null?text.substr(ev.charIndex,4):'');};u.onend=end;u.onerror=end;speechSynthesis.speak(u);});}
 
 /* --- Odgovor: pravi AI preko Workera ili jasno označen demo --- */
 async function answer(q){
  add(q,'u');setState('thinking');let r;
  if(AI_ENDPOINT){try{const x=await fetch(AI_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:q,source:'datavision'})});const j=await x.json();r=j.reply||j.text||"Nisam dobio odgovor od servera.";}catch(e){r="Veza s AI serverom trenutno nije uspjela.";}}
  else{await new Promise(t=>setTimeout(t,700));r="Demo način rada: AI još nije povezan. Primio sam poruku, a pravi odgovori stižu kad spojimo Ekorustika-data-ai.";}
- add(r,'d');await speak(r);}
+ emo('understand',1.6);add(r,'d');await speak(r);emo('joy',2);}
 
-$('#start').onclick=async()=>{add(GREETING,'d');await speak(GREETING);};
+const emo=(e,d)=>window.dvEmotion&&window.dvEmotion(e,d);
+$('#start').onclick=async()=>{emo('greet',3);add(GREETING,'d');await speak(GREETING);emo('joy',2);};
 $('#f').onsubmit=e=>{e.preventDefault();const q=$('#q').value.trim();if(!q)return;$('#q').value='';answer(q);};
 
 /* --- Mikrofon: samo na klik + dopuštenje preglednika --- */
@@ -52,3 +53,4 @@ rs();addEventListener('resize',rs);
 if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js');
 let dp;addEventListener('beforeinstallprompt',e=>{e.preventDefault();dp=e;$('#install').style.display='block';});
 $('#install').onclick=async()=>{if(dp){dp.prompt();await dp.userChoice;dp=null;$('#install').style.display='none';}};
+
