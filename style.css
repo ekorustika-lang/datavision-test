@@ -44,4 +44,4 @@ form button{flex:0 0 auto;padding:13px 16px}
 footer{position:relative;z-index:1;padding:10px 0 18px;font-size:11px;letter-spacing:4px;opacity:.75}
 #install{display:none;flex:0 0 auto;font-size:12px;padding:8px 12px}
 
-.stage::after{content:"";position:absolute;inset:auto 10% 0 10%;height:30%;background:radial-gradient(ellipse at 50% 100%,rgba(8,125,250,.28),transparent 70%);pointer-events:none}
+.stage::after{content:"";position:absolute;inset:auto 10% 0 10%;height:30%;background:radial-gradient(ellipse at 50% 100%,rgba(57,255,20,.28),transparent 70%);pointer-events:none}
