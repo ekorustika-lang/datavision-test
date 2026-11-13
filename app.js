@@ -20,7 +20,7 @@ function speak(text){return new Promise(res=>{
  if(!('speechSynthesis' in window)){res();return;}
  speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='hr-HR';u.rate=.95;u.pitch=.85;if(voice)u.voice=voice;
  const m=$('#mouth');u.onstart=()=>{setState('speaking');mouthT=setInterval(()=>m.style.transform=`scaleY(${1+Math.random()*4})`,90);};
- const end=()=>{clearInterval(mouthT);m.style.transform='';setState('idle');res();};u.onend=end;u.onerror=end;speechSynthesis.speak(u);});}
+ const end=()=>{clearInterval(mouthT);m.style.transform='';setState('idle');res();};u.onboundary=()=>{window.dvSpeechKick&&window.dvSpeechKick();};u.onend=end;u.onerror=end;speechSynthesis.speak(u);});}
 
 /* --- Odgovor: pravi AI preko Workera ili jasno označen demo --- */
 async function answer(q){
