@@ -7,7 +7,7 @@ stage.prepend(canvas);stage.classList.add('has3d');
 const mobile=/Android|iPhone|iPad/i.test(navigator.userAgent)||innerWidth<700;
 renderer.setPixelRatio(Math.min(devicePixelRatio,mobile?1.75:2));renderer.setClearColor(0,0);
 const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(30,1,.1,50);camera.position.set(0,.15,7.2);
-const C1=new THREE.Color('#46E5FF'),C2=new THREE.Color('#087DFA');
+const C1=new THREE.Color('#39FF14'),C2=new THREE.Color('#1FBF0A');
 const g=(a,b,s)=>Math.exp(-((a-b)**2)/(2*s*s));
 const g2=(x,y,cx,cy,sx,sy)=>Math.exp(-(((x-cx)**2)/(2*sx*sx)+((y-cy)**2)/(2*sy*sy)));
 /* oblik glave: sfera deformirana u muško lice */
@@ -44,7 +44,7 @@ const rig=new THREE.Group();scene.add(rig);
 const head=new THREE.Group();head.position.y=.62;rig.add(head);
 head.add(new THREE.Mesh(headGeo,mat));const pts=new THREE.Points(headGeo,ptsMat);pts.scale.setScalar(1.006);head.add(pts);
 /* oči */
-function glowTex(){const c=document.createElement('canvas');c.width=c.height=128;const x=c.getContext('2d');const r=x.createRadialGradient(64,64,0,64,64,64);r.addColorStop(0,'rgba(245,250,255,1)');r.addColorStop(.25,'rgba(70,229,255,.55)');r.addColorStop(1,'rgba(8,125,250,0)');x.fillStyle=r;x.fillRect(0,0,128,128);return new THREE.CanvasTexture(c);}
+function glowTex(){const c=document.createElement('canvas');c.width=c.height=128;const x=c.getContext('2d');const r=x.createRadialGradient(64,64,0,64,64,64);r.addColorStop(0,'rgba(240,255,235,1)');r.addColorStop(.25,'rgba(57,255,20,.55)');r.addColorStop(1,'rgba(31,191,10,0)');x.fillStyle=r;x.fillRect(0,0,128,128);return new THREE.CanvasTexture(c);}
 const gt=glowTex(),add={transparent:true,blending:THREE.AdditiveBlending,depthWrite:false};const eyes=[];
 for(const sx of[-1,1]){const p=new THREE.Vector3(sx*.36,.10,.93).normalize();shapeHead(p);const e=new THREE.Group();e.position.copy(p).multiplyScalar(.95);
  const iris=new THREE.Mesh(new THREE.RingGeometry(.02,.05,40),new THREE.MeshBasicMaterial({color:0xF5FAFF,opacity:.95,...add}));
