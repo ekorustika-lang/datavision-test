@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="hr"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DataVision - proba</title>
+<meta name="theme-color" content="#050B16">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="icon" href="../icon.svg">
+<link rel="stylesheet" href="../style.css">
+<style>
+.stage.has3d{position:relative}
+.hfield{--amp:0;position:relative;width:min(88vw,340px);aspect-ratio:1;margin:0 auto;contain:layout paint}
+.hfield>*{position:absolute;pointer-events:none}
+.hcv{left:12%;top:12%;width:76%;height:76%;mix-blend-mode:screen;-webkit-mask-image:radial-gradient(ellipse 46% 52% at 50% 46%,#000 38%,rgba(0,0,0,.55) 62%,rgba(0,0,0,.15) 82%,transparent 100%);mask-image:radial-gradient(ellipse 46% 52% at 50% 46%,#000 38%,rgba(0,0,0,.55) 62%,rgba(0,0,0,.15) 82%,transparent 100%);animation:hbr 4s ease-in-out infinite;will-change:filter,opacity}
+@keyframes hbr{0%,100%{opacity:.9;filter:drop-shadow(0 0 6px rgba(8,125,250,.35)) brightness(.96)}50%{opacity:1;filter:drop-shadow(0 0 14px rgba(70,229,255,.5)) brightness(1.06)}}
+#app.speaking .hcv{animation-duration:2s}
+.hp{width:2px;height:2px;border-radius:50%;background:#46E5FF;box-shadow:0 0 5px #46E5FF;left:var(--x);top:var(--y);animation:hsp var(--d) ease-in-out infinite;animation-delay:var(--dl);opacity:0}
+.hp:nth-of-type(4n){background:#8FF5FF}
+@keyframes hsp{0%,100%{opacity:0;transform:translateY(0)}45%{opacity:calc(.55 + .35*var(--amp))}100%{transform:translateY(-14px)}}
+@media (prefers-reduced-motion:reduce){.hfield *{animation:none!important}}
+</style>
+</head><body>
+<canvas id="particles"></canvas>
+<main id="app">
+<h1>DATAVISION</h1>
+<p class="sub">ONE MIND. EVERYWHERE.</p>
+<span class="mode" id="mode">PROBA: VRIJEME I ZNANJE</span>
+<div class="stage">
+<svg viewBox="0 0 340 340" aria-label="Hologram asistenta Data">
+<defs>
+<linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#39FF14" stop-opacity=".55"/><stop offset="1" stop-color="#1FBF0A" stop-opacity=".08"/></linearGradient>
+<pattern id="lines" width="6" height="6" patternUnits="userSpaceOnUse"><rect width="6" height="1.4" fill="#39FF14" opacity=".22"/></pattern>
+<clipPath id="clip"><rect width="340" height="330"/></clipPath>
+</defs>
+<ellipse class="ring" cx="170" cy="300" rx="130" ry="18" fill="none" stroke="#1FBF0A" stroke-width="2" stroke-dasharray="14 8"/>
+<ellipse cx="170" cy="300" rx="95" ry="11" fill="none" stroke="#39FF14" stroke-width="1.2" opacity=".6"/>
+<g id="holo" clip-path="url(#clip)">
+<path d="M40 300 C50 235 95 215 135 208 L150 190 L190 190 L205 208 C245 215 290 235 300 300 Z" fill="url(#g)" stroke="#39FF14" stroke-width="2"/>
+<path d="M40 300 C50 235 95 215 135 208 L150 190 L190 190 L205 208 C245 215 290 235 300 300 Z" fill="url(#lines)"/>
+<path d="M150 190 L150 165 M190 190 L190 165" stroke="#39FF14" stroke-width="2"/>
+<path d="M120 245 L170 270 L220 245 M170 270 L170 300" stroke="#39FF14" stroke-width="1.2" fill="none" opacity=".7"/>
+<ellipse cx="170" cy="112" rx="52" ry="64" fill="url(#g)" stroke="#39FF14" stroke-width="2"/>
+<ellipse cx="170" cy="112" rx="52" ry="64" fill="url(#lines)"/>
+<path d="M122 92 C130 50 210 50 218 92" fill="none" stroke="#39FF14" stroke-width="1.5" opacity=".8"/>
+<ellipse class="eye" cx="150" cy="108" rx="9" ry="4.5" fill="#F5FAFF"/>
+<ellipse class="eye" cx="190" cy="108" rx="9" ry="4.5" fill="#F5FAFF"/>
+<path d="M170 115 L166 132 L172 133" fill="none" stroke="#39FF14" stroke-width="1.4"/>
+<ellipse id="mouth" cx="170" cy="150" rx="13" ry="2.2" fill="#F5FAFF" style="transform-origin:170px 150px"/>
+<rect class="scan" x="20" y="0" width="300" height="3" fill="#39FF14" opacity=".55"/>
+</g></svg>
+<div class="waves"><i></i><i style="animation-delay:.1s"></i><i style="animation-delay:.25s"></i><i style="animation-delay:.05s"></i><i style="animation-delay:.3s"></i><i style="animation-delay:.15s"></i><i style="animation-delay:.2s"></i></div>
+</div>
+<div class="status"><b></b><span id="status">Spreman</span></div>
+<div class="btns"><button class="primary" id="start">Pokreni Datu</button><button id="mic">🎤 Razgovaraj</button></div>
+<form id="f"><input id="q" placeholder="Pitaj Datu" autocomplete="off"><button>Pošalji</button></form>
+<div id="chat"><div class="empty">Razgovor će se prikazati ovdje.</div></div>
+<a href="https://www.zenzap.co" style="display:block;margin:12px auto;text-align:center;color:#46E5FF">💬 Pitaj pravu Datu u Zenzapu</a>
+<p class="slogan">„Jedan Data. Svugdje s tobom.”</p>
+<button id="install">📲 Instaliraj na početni zaslon</button>
+</main>
+<footer>EKORUSTIKA DIGITALNI ALATI</footer>
+<script src="data-free.js?v=1"></script>
+<script>window.__e3d=[];addEventListener('error',function(e){window.__e3d.push((e.message||'')+' '+(e.filename||'').split('/').pop());},true);
+setTimeout(function(){var s=document.querySelector('.stage');if(s&&!s.classList.contains('has3d')){var p=document.createElement('div');p.style.cssText='position:fixed;left:8px;right:8px;bottom:8px;z-index:99;background:#300;color:#fdd;font:12px monospace;padding:8px;border-radius:8px';p.textContent='3D hologram nije učitan (PROBA): '+(window.__e3d.join(' | ')||'nema poruke o grešci');document.body.appendChild(p);}},6000);</script>
+<script src="holo-img.js?v=p3"></script>
+<div style="position:fixed;top:4px;right:6px;font:10px sans-serif;color:#46E5FF;opacity:.6;z-index:99">v3 proba 1</div>
+</body></html>
+
